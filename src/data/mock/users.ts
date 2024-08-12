@@ -1,20 +1,22 @@
-import { Suggestion } from "@/types";
+import { User } from "@/types";
 
-export const mockSuggestions: Suggestion[] = [
+export const users: User[] = [
   {
     id: "1",
-    title: "First Suggestion",
-    description: "This is the first suggestion",
-    createdBy: "User1",
-    createdDate: new Date().toISOString(),
-    comments: [],
+    nameFirst: "User",
+    nameLast: "One",
+    email: "",
   },
   {
     id: "2",
-    title: "Second Suggestion",
-    description: "This is the second suggestion",
-    createdBy: "User2",
-    createdDate: new Date().toISOString(),
-    comments: [],
+    nameFirst: "User",
+    nameLast: "Two",
+    email: "",
+  },
+  {
+    id: "3",
+    nameFirst: "User",
+    nameLast: "Three",
+    email: "",
   },
 ];
