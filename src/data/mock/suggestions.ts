@@ -3,6 +3,15 @@ import { users } from "@/data/mock/users";
 import { utilGenerateUUID, utilGenerateDateTime } from "@/utils";
 import { faker } from "@faker-js/faker";
 
+const mockHardcodedSuggestion: Thread = {
+  id: "123456789-abcdefghjklmnopqrstuvwxyz",
+  title: "HARDCODED Suggestion (try opening this deep link and refreshing)",
+  description:
+    "This will always be the first suggestion and supports deeplinking",
+  author: users[Math.floor(Math.random() * users.length)],
+  createdDateTime: utilGenerateDateTime(),
+};
+
 const generateMockSuggestions = (count: number): Thread[] => {
   return Array.from({ length: count }, () => ({
     id: utilGenerateUUID(),
@@ -28,7 +37,10 @@ const generateMockSuggestionComments = (
   }));
 };
 
-export let mockSuggestions = generateMockSuggestions(10);
+export let mockSuggestions = [
+  mockHardcodedSuggestion,
+  ...generateMockSuggestions(10),
+];
 export let mockSuggestionComments = generateMockSuggestionComments(
   mockSuggestions,
   8

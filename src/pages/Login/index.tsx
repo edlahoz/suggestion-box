@@ -1,16 +1,29 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useUserActions } from "@/store/user/actions";
 import { users } from "@/data/mock/users";
+import { useSuggestionById } from "@/store/suggestions/selectors";
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { updateUser } = useUserActions();
+
+  // Extract the suggestion ID from the stored location, if available
+  const suggestionId = location.state?.from?.pathname?.split("/").pop();
+  const suggestionExists = suggestionId
+    ? useSuggestionById(suggestionId)
+    : null;
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedUser = users.find((user) => user.id === event.target.value);
     if (selectedUser) {
       updateUser(selectedUser);
-      navigate("/suggestions");
+
+      // If the suggestion exists, navigate to the deep link; otherwise, navigate to suggestions as usual
+      const redirectPath = suggestionExists
+        ? location.state?.from?.pathname
+        : "/suggestions";
+      navigate(redirectPath);
     }
   };
 

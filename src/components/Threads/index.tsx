@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Thread } from "@/types";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 type ThreadsProps = {
@@ -11,9 +11,11 @@ type ThreadsProps = {
 
 export default function Threads({ data, title, path }: ThreadsProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(true);
+  const location = useLocation(); // Hook to get the current location
   const togglePanel = () => {
     setIsPanelOpen((prev) => !prev);
   };
+
   return (
     <div
       className={`relative ${
@@ -35,16 +37,21 @@ export default function Threads({ data, title, path }: ThreadsProps) {
           <div className="flex-1 overflow-y-auto">
             <h1 className="text-lg font-bold">{title}</h1>
             <ul>
-              {data.map((thread) => (
-                <li key={thread.id} className="my-2">
-                  <Link
-                    to={`${path}/${thread.id}`}
-                    className="text-blue-600 hover:underline"
-                  >
-                    {thread.title}
-                  </Link>
-                </li>
-              ))}
+              {data.map((thread) => {
+                const isActive = location.pathname === `${path}/${thread.id}`;
+                return (
+                  <li key={thread.id} className="my-2">
+                    <Link
+                      to={`${path}/${thread.id}`}
+                      className={`text-blue-600 hover:underline ${
+                        isActive ? "font-bold underline text-blue-800" : ""
+                      }`}
+                    >
+                      {thread.title}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <div className="border-t border-gray-300 p-4 bg-gray-100">
