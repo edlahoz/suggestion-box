@@ -5,18 +5,18 @@ export const users: User[] = [
     id: "1",
     nameFirst: "User",
     nameLast: "One",
-    email: "",
+    email: "user@one.com",
   },
   {
     id: "2",
     nameFirst: "User",
     nameLast: "Two",
-    email: "",
+    email: "user@two.com",
   },
   {
     id: "3",
     nameFirst: "User",
     nameLast: "Three",
-    email: "",
+    email: "user@three.com",
   },
 ];
