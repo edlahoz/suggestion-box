@@ -1,23 +1,24 @@
 import { User } from "@/types";
 import { utilGenerateUUID } from "@/utils";
+import { faker } from "@faker-js/faker";
 
 export const users: User[] = [
   {
     id: utilGenerateUUID(),
-    nameFirst: "User",
-    nameLast: "One",
-    email: "user@one.com",
+    nameFirst: faker.name.firstName(),
+    nameLast: faker.name.lastName(),
+    email: faker.internet.email(),
   },
   {
     id: utilGenerateUUID(),
-    nameFirst: "User",
-    nameLast: "Two",
-    email: "user@two.com",
+    nameFirst: faker.name.firstName(),
+    nameLast: faker.name.lastName(),
+    email: faker.internet.email(),
   },
   {
     id: utilGenerateUUID(),
-    nameFirst: "User",
-    nameLast: "Three",
-    email: "user@three.com",
+    nameFirst: faker.name.firstName(),
+    nameLast: faker.name.lastName(),
+    email: faker.internet.email(),
   },
 ];

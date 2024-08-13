@@ -1,72 +1,54 @@
-import { Thread } from "@/types";
+import { Thread, Comment } from "@/types";
 import { users } from "@/data/mock/users";
 import { utilGenerateUUID, utilGenerateDateTime } from "@/utils";
+import { faker } from "@faker-js/faker";
 
-export const suggestions: Thread[] = [
-  {
+const generateMockSuggestions = (count: number): Thread[] => {
+  return Array.from({ length: count }, () => ({
     id: utilGenerateUUID(),
-    title: "First Suggestion",
-    description: "This is the first suggestion",
-    author: users[0],
+    title: faker.finance.accountName(),
+    description: faker.commerce.productDescription(),
+    author: users[Math.floor(Math.random() * users.length)],
     createdDateTime: utilGenerateDateTime(),
-    comments: [
-      {
-        id: utilGenerateUUID(),
-        body: "This is a comment",
-        author: users[1],
-        createdDateTime: utilGenerateDateTime(),
-      },
-      {
-        id: utilGenerateUUID(),
-        body: "This is another comment",
-        author: users[2],
-        createdDateTime: utilGenerateDateTime(),
-      },
-      {
-        id: utilGenerateUUID(),
-        body: "This is a third comment",
-        author: users[0],
-        createdDateTime: utilGenerateDateTime(),
-      },
-      {
-        id: utilGenerateUUID(),
-        body: "This is a fourth comment",
-        author: users[1],
-        createdDateTime: utilGenerateDateTime(),
-      },
-    ],
-  },
-  {
-    id: utilGenerateUUID(),
-    title: "Second Suggestion",
-    description: "This is the second suggestion",
-    author: users[1],
-    createdDateTime: utilGenerateDateTime(),
-    comments: [
-      {
-        id: utilGenerateUUID(),
-        body: "This is a comment",
-        author: users[1],
-        createdDateTime: utilGenerateDateTime(),
-      },
-      {
-        id: utilGenerateUUID(),
-        body: "This is another comment",
-        author: users[2],
-        createdDateTime: utilGenerateDateTime(),
-      },
-      {
-        id: utilGenerateUUID(),
-        body: "This is a third comment",
-        author: users[0],
-        createdDateTime: utilGenerateDateTime(),
-      },
-      {
-        id: utilGenerateUUID(),
-        body: "This is a fourth comment",
-        author: users[1],
-        createdDateTime: utilGenerateDateTime(),
-      },
-    ],
-  },
-];
+  }));
+};
+
+const generateMockSuggestionComments = (
+  suggestions: Thread[],
+  commentsPerSuggestion: number
+) => {
+  return suggestions.map((suggestion) => ({
+    suggestionId: suggestion.id,
+    comments: Array.from({ length: commentsPerSuggestion }, () => ({
+      id: utilGenerateUUID(),
+      body: faker.lorem.paragraph({ min: 1, max: 8 }),
+      author: users[Math.floor(Math.random() * users.length)],
+      createdDateTime: utilGenerateDateTime(),
+    })),
+  }));
+};
+
+export let mockSuggestions = generateMockSuggestions(10);
+export let mockSuggestionComments = generateMockSuggestionComments(
+  mockSuggestions,
+  8
+);
+
+export function mockAddSuggestionComment(
+  suggestionId: string,
+  comment: Comment
+) {
+  mockSuggestionComments = mockSuggestionComments.map((suggestion) => {
+    if (suggestion.suggestionId === suggestionId) {
+      return {
+        ...suggestion,
+        comments: [...suggestion.comments, comment],
+      };
+    }
+    return suggestion;
+  });
+}
+
+export function mockAddSuggestion(suggestion: Thread) {
+  mockSuggestions = [...mockSuggestions, suggestion];
+}

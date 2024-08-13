@@ -1,9 +1,9 @@
-function App() {
+import Router from "@/components/Router";
+
+export default function App() {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold text-blue-500">Hello, Tailwind CSS!</h1>
+    <div className="flex flex-col min-h-screen bg-stone-900">
+      <Router />
     </div>
   );
 }
-
-export default App;

@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { suggestionsAtom } from "./atom";
 import { utilGenerateDateTime, utilGenerateUUID } from "@/utils";
 import { useUserSelector } from "../user/selectors";
+import { User } from "@/types";
 
 export const useSuggestionsActions = () => {
   const user = useUserSelector();
@@ -14,7 +15,7 @@ export const useSuggestionsActions = () => {
         id: utilGenerateUUID(),
         title,
         description,
-        author: user,
+        author: user as User,
         createdDateTime: utilGenerateDateTime(),
       },
     ]);
@@ -26,26 +27,5 @@ export const useSuggestionsActions = () => {
     );
   };
 
-  const addComment = (suggestionId: string, body: string) => {
-    setSuggestions((prev) =>
-      prev.map((suggestion) =>
-        suggestion.id === suggestionId
-          ? {
-              ...suggestion,
-              comments: [
-                ...(suggestion.comments || []),
-                {
-                  id: utilGenerateUUID(),
-                  body,
-                  author: user,
-                  createdDateTime: utilGenerateDateTime(),
-                },
-              ],
-            }
-          : suggestion
-      )
-    );
-  };
-
-  return { addSuggestion, removeSuggestion, addComment };
+  return { addSuggestion, removeSuggestion };
 };
