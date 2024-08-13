@@ -18,5 +18,5 @@ export type Thread = {
   description: string;
   author: User;
   createdDateTime: string;
-  comments: Comment[];
+  comments?: Comment[];
 };

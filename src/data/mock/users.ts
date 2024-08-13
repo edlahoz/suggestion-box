@@ -1,20 +1,21 @@
 import { User } from "@/types";
+import { utilGenerateUUID } from "@/utils";
 
 export const users: User[] = [
   {
-    id: "1",
+    id: utilGenerateUUID(),
     nameFirst: "User",
     nameLast: "One",
     email: "user@one.com",
   },
   {
-    id: "2",
+    id: utilGenerateUUID(),
     nameFirst: "User",
     nameLast: "Two",
     email: "user@two.com",
   },
   {
-    id: "3",
+    id: utilGenerateUUID(),
     nameFirst: "User",
     nameLast: "Three",
     email: "user@three.com",
