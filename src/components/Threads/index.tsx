@@ -3,6 +3,7 @@ import { Thread } from "@/types";
 import { Link, useLocation } from "react-router-dom";
 import ThreadsHeader from "@/components/ThreadsHeader";
 import ThreadsFooter from "@/components/ThreadsFooter";
+import { utilFormatDate } from "@/utils";
 
 type ThreadsProps = {
   data: Thread[];
@@ -50,7 +51,10 @@ export default function Threads({
               {data.map((thread) => {
                 const isActive = pathname === `${path}/${thread.id}`;
                 return (
-                  <li key={thread.id} className="my-2">
+                  <li
+                    key={thread.id}
+                    className="flex flex-col items-start border-t-2 border-gray-300 py-2"
+                  >
                     <Link
                       to={`${path}/${thread.id}`}
                       className={`text-blue-600 hover:underline ${
@@ -59,6 +63,11 @@ export default function Threads({
                     >
                       {thread.title}
                     </Link>
+                    <span className="text-xs text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis">
+                      {utilFormatDate(thread.createdDateTime)}
+                      {" - "}
+                      {thread.author.nameFirst} {thread.author.nameLast}
+                    </span>
                   </li>
                 );
               })}

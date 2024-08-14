@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { format } from "date-fns";
 
 /**
  * Generates a random unique ID using UUID v4.
@@ -14,4 +15,13 @@ export function utilGenerateUUID(): string {
  */
 export function utilGenerateDateTime(): string {
   return new Date().toISOString();
+}
+
+/**
+ * Formats a date string to a human-readable format.
+ * @param date
+ * @returns A formatted date string.
+ */
+export function utilFormatDate(date: string): string {
+  return format(new Date(date), "MMM dd, yyyy h:mm a");
 }

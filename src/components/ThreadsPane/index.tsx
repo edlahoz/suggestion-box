@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Thread, Comment } from "@/types";
 import FormTextInput from "../FormTextInput";
+import UserAvatar from "../UserAvatar";
+import { utilFormatDate } from "@/utils";
 
 type ThreadsPaneProps = {
   thread?: Thread;
@@ -24,20 +26,26 @@ export default function ThreadsPane({
 
   return (
     <div className="flex-1 p-4 flex flex-col">
+      <section className="flex flex-col items-center pb-6 border-b border-gray-300">
+        <h1 className="text-2xl font-semibold text-white mb-2">
+          {thread?.title}
+        </h1>
+        <p className="text-base text-slate-400 text-center mb-4">
+          {thread?.description}
+        </p>
+        <div className="flex items-center space-x-2">
+          {thread?.author && <UserAvatar author={thread?.author} />}
+          <span className="text-xs text-slate-400">
+            {thread?.createdDateTime && utilFormatDate(thread.createdDateTime)}
+          </span>
+        </div>
+      </section>
       <div className="flex-1 overflow-y-auto text-white">
-        <h1 className="text-lg font-bold">{thread?.title}</h1>
-        <p className="text-sm">{thread?.description}</p>
         <ul className="mt-4">
           {comments?.map((comment) => (
             <li key={comment.id} className="my-4">
               <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <img
-                    src={`https://ui-avatars.com/api/?name=${comment.author.nameFirst}+${comment.author.nameLast}&background=random`}
-                    alt={comment.author.nameFirst}
-                    className="w-8 h-8 rounded-full"
-                  />
-                </div>
+                <UserAvatar author={comment.author} />
                 <div className="ml-2">
                   <p className="text-sm">{comment.body}</p>
                 </div>
