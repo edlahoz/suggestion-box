@@ -32,7 +32,7 @@ export default function ThreadsFooter({
               {onAddRandomThread && (
                 <button
                   onClick={onAddRandomThread}
-                  className="mt-2 relative flex items-center justify-center p-2 w-full text-white font-bold rounded-lg overflow-hidden transition-transform duration-500 ease-in-out transform hover:scale-110"
+                  className="relative flex items-center justify-center p-2 w-full text-white hover:bg-gray-800 transition-colors duration-200"
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 opacity-75 animate-pulse"></span>
                   <span className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 opacity-50 blur-sm"></span>
@@ -42,7 +42,7 @@ export default function ThreadsFooter({
               <button
                 disabled={isDisabled}
                 onClick={() => setIsAddingNewThread(true)}
-                className={`mt-2 flex items-center justify-center p-2 w-full bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+                className={`flex items-center justify-center p-2 w-full bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-colors duration-200 ${
                   isDisabled ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >

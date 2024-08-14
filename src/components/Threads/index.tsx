@@ -36,7 +36,7 @@ export default function Threads({
     <div
       className={`relative ${
         isPanelOpen ? "w-[300px]" : "w-16"
-      } bg-gray-200 p-4 border-r border-gray-300 flex flex-col transition-all duration-300 ease-in-out`}
+      } bg-gray-200 flex flex-col transition-all duration-300 ease-in-out`}
     >
       <ThreadsHeader
         title={title}
@@ -53,7 +53,7 @@ export default function Threads({
                 return (
                   <li
                     key={thread.id}
-                    className="flex flex-col items-start border-t-2 border-gray-300 py-2"
+                    className="flex flex-col items-start border-t-2 border-gray-300 py-2 pl-2"
                   >
                     <Link
                       to={`${path}/${thread.id}`}

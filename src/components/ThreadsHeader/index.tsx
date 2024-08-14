@@ -13,9 +13,9 @@ export default function ThreadsHeader({
 }: ThreadsHeaderProps) {
   return (
     <div
-      className={`flex justify-${
-        isPanelOpen ? "between" : "center"
-      } items-center mb-2`}
+      className={`flex ${
+        isPanelOpen ? "justify-between" : "justify-center"
+      } items-center p-2 bg-stone-900 text-white`}
     >
       {isPanelOpen && <h1 className="text-lg font-bold">{title}</h1>}
       <button
