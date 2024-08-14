@@ -1,20 +1,35 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Thread } from "@/types";
 import { Link, useLocation } from "react-router-dom";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import ThreadsHeader from "@/components/ThreadsHeader";
+import ThreadsFooter from "@/components/ThreadsFooter";
 
 type ThreadsProps = {
   data: Thread[];
   title: string;
   path: string;
+  addNewThread?: (title: string) => void;
+  addRandomThread?: () => void;
 };
 
-export default function Threads({ data, title, path }: ThreadsProps) {
+export default function Threads({
+  data,
+  title,
+  path,
+  addNewThread,
+  addRandomThread,
+}: ThreadsProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(true);
-  const location = useLocation(); // Hook to get the current location
-  const togglePanel = () => {
-    setIsPanelOpen((prev) => !prev);
-  };
+  const { pathname } = useLocation();
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const togglePanel = () => setIsPanelOpen((prev) => !prev);
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTop = listRef.current.scrollHeight;
+    }
+  }, [data]);
 
   return (
     <div
@@ -22,23 +37,18 @@ export default function Threads({ data, title, path }: ThreadsProps) {
         isPanelOpen ? "w-[300px]" : "w-16"
       } bg-gray-200 p-4 border-r border-gray-300 flex flex-col transition-all duration-300 ease-in-out`}
     >
-      <button
-        onClick={togglePanel}
-        className="absolute top-4 right-4 text-blue-600 hover:text-blue-800 transition-transform duration-300"
-      >
-        {isPanelOpen ? (
-          <FaArrowLeft className="text-xl" />
-        ) : (
-          <FaArrowRight className="text-xl" />
-        )}
-      </button>
+      <ThreadsHeader
+        title={title}
+        isPanelOpen={isPanelOpen}
+        togglePanel={togglePanel}
+      />
+
       {isPanelOpen && (
         <>
-          <div className="flex-1 overflow-y-auto">
-            <h1 className="text-lg font-bold">{title}</h1>
+          <div ref={listRef} className="flex-1 overflow-y-auto">
             <ul>
               {data.map((thread) => {
-                const isActive = location.pathname === `${path}/${thread.id}`;
+                const isActive = pathname === `${path}/${thread.id}`;
                 return (
                   <li key={thread.id} className="my-2">
                     <Link
@@ -54,9 +64,12 @@ export default function Threads({ data, title, path }: ThreadsProps) {
               })}
             </ul>
           </div>
-          <div className="border-t border-gray-300 p-4 bg-gray-100">
-            <p className="text-sm text-gray-600">Left Panel Footer</p>
-          </div>
+
+          <ThreadsFooter
+            isDisabled={false}
+            onAddNewThread={addNewThread}
+            onAddRandomThread={addRandomThread}
+          />
         </>
       )}
     </div>

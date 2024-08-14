@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Thread, Comment } from "@/types";
+import FormTextInput from "../FormTextInput";
 
 type ThreadsPaneProps = {
   thread?: Thread;
@@ -12,20 +13,7 @@ export default function ThreadsPane({
   thread,
   onNewComment,
 }: ThreadsPaneProps) {
-  const [commentInput, setCommentInput] = useState("");
   const commentsEndRef = useRef<HTMLLIElement | null>(null);
-
-  function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.key === "Enter" && commentInput.trim()) {
-      event.preventDefault(); // Prevent the form from submitting
-      onNewComment(commentInput);
-      setCommentInput(""); // Clear the input field
-    }
-  }
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setCommentInput(event.target.value);
-  }
 
   useEffect(() => {
     // Scroll to the bottom of the comments list when a new comment is added
@@ -60,16 +48,7 @@ export default function ThreadsPane({
         </ul>
       </div>
 
-      <input
-        name="comment"
-        value={commentInput}
-        onChange={handleChange}
-        onKeyDown={handleKeyPress}
-        type="text"
-        placeholder="Enter your comment"
-        className="w-full p-2 border rounded"
-        autoComplete="off"
-      />
+      <FormTextInput onSubmitText={(body) => onNewComment(body)} />
     </div>
   );
 }

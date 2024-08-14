@@ -15,7 +15,7 @@ const mockHardcodedSuggestion: Thread = {
 const generateMockSuggestions = (count: number): Thread[] => {
   return Array.from({ length: count }, () => ({
     id: utilGenerateUUID(),
-    title: faker.finance.accountName(),
+    title: faker.hacker.phrase(),
     description: faker.commerce.productDescription(),
     author: users[Math.floor(Math.random() * users.length)],
     createdDateTime: utilGenerateDateTime(),
@@ -63,4 +63,8 @@ export function mockAddSuggestionComment(
 
 export function mockAddSuggestion(suggestion: Thread) {
   mockSuggestions = [...mockSuggestions, suggestion];
+  mockSuggestionComments = [
+    ...mockSuggestionComments,
+    { suggestionId: suggestion.id, comments: [] },
+  ];
 }
